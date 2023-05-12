@@ -1,5 +1,5 @@
 <template>
     <v-container>
-        <Nuxt />
+        <slot />
     </v-container>
 </template>

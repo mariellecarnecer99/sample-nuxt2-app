@@ -1,81 +1,55 @@
 <template>
-  <v-app dark>
-    <v-navigation-drawer
-      expand-on-hover
-      rail
-      app
-    >
-      <v-list>
-        <v-list-item two-line>
-          <v-list-item-action>
-            <v-icon>mdi-account-circle</v-icon>
-          </v-list-item-action>
+  <v-card>
+    <v-layout>
+      <v-navigation-drawer
+        expand-on-hover
+        rail
+      >
+        <v-list>
+          <v-list-item
+            prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+            title="Sandra Adams"
+            subtitle="sandradams@gmail.com"
+          >
+            <template v-slot:append>
+              <v-btn
+                variant="text"
+                icon="mdi-logout"
+                @click="logoutUser()"
+              ></v-btn>
+            </template>
+          </v-list-item>
+        </v-list>
 
-          <v-list-item-content>
-            <v-list-item-title>Sandra Adams</v-list-item-title>
-            <v-list-item-subtitle>sandradams@gmail.com</v-list-item-subtitle>
-          </v-list-item-content>
-          
-          <v-icon @click="logoutUser()">mdi-logout</v-icon>
-        </v-list-item>
-      </v-list>
+        <v-divider></v-divider>
 
-      <v-divider></v-divider>
+        <v-list density="compact" nav>
+          <v-list-item to="/" prepend-icon="mdi-home" title="Home" value="home"></v-list-item>
+          <v-list-item to="/shared" prepend-icon="mdi-account-multiple" title="Shared with me" value="shared"></v-list-item>
+          <v-list-item to="/starred" prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
+        </v-list>
+      </v-navigation-drawer>
 
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{item.title}}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    
-    <v-main>
-      <v-container>
-        <Nuxt />
-      </v-container>
-    </v-main>
-  </v-app>
+      <v-main>
+          <slot />
+      </v-main>
+    </v-layout>
+  </v-card>
 </template>
 
 <script>
 export default {
-  name: 'DefaultLayout',
-  data () {
-    return {
-      items: [
-        {
-          icon: 'mdi-home',
-          title: 'Home',
-          to: '/'
-        },
-        {
-          icon: 'mdi-account-multiple',
-          title: 'Shared with me',
-          to: '/shared'
-        },
-        {
-          icon: 'mdi-star',
-          title: 'Starred',
-          to: '/starred'
+    data() {
+        return {
+            // userEmail: localStorage.getItem('userEmail')
         }
-      ]
+    },
+    methods: {
+        logoutUser() {
+            const router = useRouter();
+            router.push({path: "/login"});
+            localStorage.removeItem('userEmail');
+        }
     }
-  },
-  methods: {
-    logoutUser() {
-      this.$router.push({path: "/login"});
-    }
-  }
 }
 </script>

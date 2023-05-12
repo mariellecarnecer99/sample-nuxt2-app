@@ -27,6 +27,7 @@
                     <v-radio-group
                         label="Contact Type"
                         v-model="form.inline"
+                        inline
                         :rules="checkboxRules"
                     >
                         <v-radio
@@ -69,15 +70,17 @@
             ></v-text-field>
             <v-card
                 class="mx-auto my-5"
+                prepend-icon="mdi-account-box"
                 v-for="(item, i) in contactInfo"
                 :key="i"
                 :value="item"
             >
+                <template v-slot:title>
                     <v-row justify="space-between">
-                        <v-col style="margin: auto 0">
-                            <v-icon class="mx-3" color="surface-variant" medium>mdi-account-box</v-icon> {{item?.name}}
+                        <v-col style="margin: auto 0" cols="4">
+                            <p>{{item?.name}}</p>
                         </v-col>
-                        <v-col >
+                        <v-col cols="5">
                             <v-chip
                                 v-if="item?.inline === 'Personal'"
                                 class="ma-2"
@@ -95,26 +98,27 @@
                             {{item?.inline}}
                             </v-chip>
                             <span>
-                                <v-icon class="mx-2" color="surface-variant" small>mdi-share-variant</v-icon>
-                                <v-icon color="surface-variant" small>mdi-star</v-icon>
+                                <v-icon class="mx-3" color="surface-variant" size="x-small" icon="mdi-share-variant"></v-icon>
+                                <v-icon color="surface-variant" size="x-small" icon="mdi-star"></v-icon>
                             </span>
                         </v-col>
                     </v-row>
+                </template>
                 
                 <v-card-text>
-                    <p><span><v-icon small>mdi-email-open</v-icon></span> {{item?.email}}</p>
-                    <p><span><v-icon small>mdi-phone</v-icon></span> {{item?.phone}}</p>
+                    <p><span><v-icon icon="mdi-email-open"></v-icon></span> {{item?.email}}</p>
+                    <p><span><v-icon icon="mdi-phone"></v-icon></span> {{item?.phone}}</p>
                 </v-card-text>
 
                 <v-card-actions>
                     <v-row justify="center" align="center">
                             <v-col>
                                 <v-btn
-                                  outlined
-                                  color="warning"
-                                  class="mt-4"
-                                  block
-                                  @click="updateContact(i)"
+                                    variant="outlined"
+                                    color="warning"
+                                    class="mt-4"
+                                    block
+                                    @click="updateContact(i)"
                                 >
                                 Update
                                 </v-btn>
@@ -122,11 +126,11 @@
 
                             <v-col>
                                 <v-btn
-                                  outlined
-                                  color="error"
-                                  class="mt-4"
-                                  block
-                                  @click="deleteContact(i)"
+                                    variant="outlined"
+                                    color="error"
+                                    class="mt-4"
+                                    block
+                                    @click="deleteContact(i)"
                                 >
                                 Delete
                                 </v-btn>
